@@ -2,8 +2,8 @@
 import os
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
-from ketqua import ketqua
 from process_result_problem_1 import process_result_problem_1
+from process_result_problem_2 import process_result_problem_2
 dir_path = os.path.dirname(os.path.realpath(__file__))
 UPLOAD_FOLDER = dir_path + '/test'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -42,19 +42,18 @@ def problem2():
 def result2():
 	if request.method == 'POST':
 		fasta_seq = request.form['seq']
-		dataset = request.form['options']
-		name, sequence, result = process_result_problem_1(fasta_seq, dataset)
-		return render_template("result-1.html",name = name, sequence = sequence, result = result)
-
-
-@app.route("/uploader", methods = ['GET', 'POST'])
-def upload_file():
-	if request.method == 'POST':
-		file = request.files['file']
-		filename = secure_filename(file.filename)
-		file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-		result = ketqua()
-	return render_template("result.html", name = result)
+		threshold_type = request.form['options']
+		name, sequence, threshold, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold_type)
+		return render_template(
+			"result-2.html",
+			name = name,
+			sequence = sequence,
+			sequence_dict = enumerate(list(sequence)),
+			sequence_length = len(sequence),
+			threshold = threshold,
+			y_pred_prob = y_pred_prob,
+			y_pred_label = y_pred_label
+		)
 
 if __name__ == "__main__":
 	app.run(debug = True)

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    	<meta charset="utf-8">
+	<title>HTML Web Template</title>
+	<link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>        
+        <div class="container">
+            <div class="row">
+                {% include 'sidenav.html' %}
+                
+                <div id="welcome" class="tm-right-column">
+                    <section id="welcome">
+                        <figure>
+                            <img src="../static/pr2.jpg" alt="Header image" class="img-fluid">    
+                        </figure>
+                    </section>
+    
+                    <div class="tm-content-div">
+                        <section id="math" class="tm-section">
+                            <header>
+                                <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Predicting Protein-DNA Binding Residues</big></h2>
+                            </header>
+                            <p>Predicting Protein-DNA Binding Residues by using Capsule network based on position‐specific scoring matrix (PSSM), random-undersampling and 10-fold cross-validation ensemble</p>
+                        </section>			
+                        <section id="result" class="">
+                            <h2>Protein Name</h2>
+                            <p>{{ name[1:] }}</p>
+                            <h2>Threshold Used</h2>
+                            <p>{{ threshold }}</p>
+                            <h2>Predicted Results</h2>
+                            <table style="width:100%">
+                                <tr>
+                                    <th>Res #</th>
+                                    <th>AA</th> 
+                                    <th>Prob.</th>
+                                    <th>N/B</th>
+                                    <th>Res #</th>
+                                    <th>AA</th> 
+                                    <th>Prob.</th>
+                                    <th>N/B</th>
+                                    <th>Res #</th>
+                                    <th>AA</th> 
+                                    <th>Prob.</th>
+                                    <th>N/B</th>
+                                </tr>
+                                {% for index, residue in sequence_dict %}
+                                    {% if index % 3 == 0 %}
+                                        <tr>
+                                    {% endif %}
+                                    
+                                    {% if y_pred_label[index] == 0 %}
+                                        <td>{{ index }}</td>
+                                        <td>{{ residue }}</td> 
+                                        <td>{{ y_pred_prob[index] }}</td>
+                                        <td>N</td>
+                                    {% else %}
+                                        <td style="color: red;">{{ index }}</td>
+                                        <td style="color: red;">{{ residue }}</td> 
+                                        <td style="color: red;">{{ y_pred_prob[index] }}</td>
+                                        <td style="color: red;">B</td>
+                                    {% endif %}
+                                    
+                                    {% if index % 3 == 2 %}
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if sequence_length % 3 != 0 %}
+                                    </tr>
+                                {% endif %}
+                            </table>
+                            <h2>Results Format</h2>
+                            <p>
+                                "Res #" means the position of the residue in the query protein.<br />
+                                "AA" means the amino acid type of the corresponding residue.<br />
+                                "Prob." means the probability of that the residue is predicted as DNA-binding class by TargetDNA.<br />
+                                "N/B" means the predicted state of the corresponding residue ("N" and "B" represent non-binding and DNA-binding, respectively).<br />
+                            </p>
+                        </section>
+                        <br />
+                    </div> <!-- Right column: content -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+</body>
+</html>
