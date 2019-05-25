@@ -80,7 +80,7 @@ def process_result_problem_1(fasta_seq, dataset):
 
     # load model weights based on dataset type
     dataset_weight = ''
-    if dataset == '1':    # H. sapiens
+    if dataset == '0':    # H. sapiens
         dataset_weight = dir_path + '/problem-1/seed_11'
     else:               # S. cerevisiae
         dataset_weight = dir_path + '/problem-1/seed_13'

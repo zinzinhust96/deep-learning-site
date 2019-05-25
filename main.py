@@ -34,6 +34,18 @@ def result1():
 		name, sequence, result = process_result_problem_1(fasta_seq, dataset)
 		return render_template("result-1.html",name = name, sequence = sequence, result = result)
 
+@app.route("/problem-2")
+def problem2():
+    return render_template("problem-2.html") 
+
+@app.route("/result-2", methods = ['GET', 'POST'])
+def result2():
+	if request.method == 'POST':
+		fasta_seq = request.form['seq']
+		dataset = request.form['options']
+		name, sequence, result = process_result_problem_1(fasta_seq, dataset)
+		return render_template("result-1.html",name = name, sequence = sequence, result = result)
+
 
 @app.route("/uploader", methods = ['GET', 'POST'])
 def upload_file():
