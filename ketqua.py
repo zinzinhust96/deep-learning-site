@@ -51,21 +51,24 @@ def ketqua():
 	CNN.load_weights('model.hdf5')
 
 	Data= []
-	test = os.listdir("/home/december/Desktop/web/test")
+	dir_path = os.path.dirname(os.path.realpath(__file__))
+	test = os.listdir(dir_path + '/test')
+	print('test: ', test)
 	for x in test: # For every uninfected Picture
-	    Data.append(["/home/december/Desktop/web/test/"+x,0])
+	    Data.append([dir_path + '/test' +x,0])
 	Image = [x[0] for x in Data]
 	del Data
 	image = []
 	X_test = []
-	image=Image
+	image = Image
+
 	def GetPic(path):
 	    im = cv2.imread(path,1)
 	    im = cv2.resize(im,(64,64)) # cắt thành ảnh có kích thước phù hợp
 	    im = im/255
 	    return im
-	for x in range(len(image)):
-	    X_test.append(GetPic(image[x]))
+
+	X_test.append(GetPic('/home/zinzin/Documents/python/deep-learning-site/test/C37BP2_thinF_IMG_20150620_133205a_cell_88.png'))
 	X_test=np.array(X_test)
 
 	x=CNN.predict(X_test)

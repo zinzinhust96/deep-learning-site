@@ -3,7 +3,9 @@ import os
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from ketqua import ketqua
-UPLOAD_FOLDER = '/home/december/Desktop/web/test'
+from process_result_problem_1 import process_result_problem_1
+dir_path = os.path.dirname(os.path.realpath(__file__))
+UPLOAD_FOLDER = dir_path + '/test'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
@@ -18,7 +20,20 @@ def index():
 
 @app.route("/deeplearning")
 def deep():
-    return render_template("deep.html") 
+    return render_template("deep.html")
+
+@app.route("/problem-1")
+def problem1():
+    return render_template("problem-1.html") 
+
+@app.route("/result-1", methods = ['GET', 'POST'])
+def result1():
+	if request.method == 'POST':
+		fasta_seq = request.form['seq']
+		dataset = request.form['options']
+		result = process_result_problem_1(fasta_seq, dataset)
+		return render_template("temp.html",result = result)
+
 
 @app.route("/uploader", methods = ['GET', 'POST'])
 def upload_file():

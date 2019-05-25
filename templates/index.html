@@ -9,29 +9,7 @@
 <body>        
         <div class="container">
             <div class="row">
-                <div class="tm-left-right-container">
-                    <!-- Left column: logo and menu -->
-                    <div class="tm-blue-bg tm-left-column">                        
-                        <div class="tm-logo-div text-xs-center">
-                            <img src="../static/tm-neaty-logo.png" alt="Logo">
-                            <h1 class="tm-site-name">HUST</h1>
-			    <h7 class="tm-site-name">HANOI University of Science & Technology</h7>
-                        </div>
-                        <nav class="tm-main-nav">
-                            <ul class="tm-main-nav-ul">
-                                <li class="tm-nav-item">
-                                    <a href="#welcome" class="tm-nav-item-link">Chào mừng</a>
-                                </li>
-                                <li class="tm-nav-item">
-                                    <a href="#about" class="tm-nav-item-link">Liên hệ</a>
-                                </li>
-                                <li class="tm-nav-item">
-                                    <a href="#deep" class="tm-nav-item-link">Deep Learning</a>
-                                </li>
-                                
-                            </ul>
-                        </nav>                                         
-                    </div> <!-- Left column: logo and menu -->
+                    {% include 'sidenav.html' %}
                     
                     <!-- Right column: content -->
                     <div class="tm-right-column">
@@ -43,31 +21,26 @@
                             <!-- Welcome section -->
                             <section id="welcome" class="tm-section">
                                 <header>
-                                    <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>welcome</big></h2>	
+                                    <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Welcome</big></h2>	
                                 </header>
-                                <p>Slile các bài giảng theo từng môn học</p>
+                                <p>Demo site for my graduation thesis</p>
                             </section>
-                            <!-- About section -->
-                            <section id="about" class="tm-section">
-                                <div class="row">
-					<header>
-                                            <h2 class="tm-blue-text tm-section-title tm-margin-b-45">Mọi thắc mắc vui lòng liên hệ:</h2>
-                                        </header>
-				    <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 pull-lg-8 pull-md-7 tm-about-img-container">
-                                        <img src="../static/mr.jpg" alt="Image" class="img-fluid">    
-                                    </div>                                    
-                                    <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12 push-lg-4 push-md-5">
-                                        <p>KTMT - NGUYỄN HỒNG QUANG<br />
-					Email: quang.nguyenhong@hust.edu.vn<br />
-					Phone: 0978 813 688</p> 
-                                    </div>
 
-                                      
-                                </div>                            
-                            </section>  
+                            <!-- Problem 2-->     
+                            <section id="problem-1" class="tm-section">
+                                <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Pseudouridine sites identification on RNA sequence</h2></header>
+                                <div class="tm-gallery-container tm-gallery-1">
+                                    <div class="tm-img-container tm-img-container-1">
+                                        <a href="problem-1"><img src="../static/pr1.jpg" alt="Problem 1" class="img-fluid tm-img-tn"></a>
+                                    </div> 
+                                    <p>
 
-                            <!-- Section 1-->     
-                            <section id="deep" class="tm-section">
+                                    </p>                                  
+                                </div>
+                            </section>
+
+                            <!-- Problem 2-->     
+                            <section id="problem-2" class="tm-section">
                                 <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Deep Learning</h2></header>
                                 <div class="tm-gallery-container tm-gallery-1">
                                     <div class="tm-img-container tm-img-container-1">
@@ -76,10 +49,8 @@
                                 </div>
                             </section>
 
-                            
-
                             <footer>
-                                <p class="tm-copyright-p">Nguyễn Bách Thắng 20153505</p>
+                                Doan Ngoc Giang Nam - 20143012
                             </footer>
                         </div>  
                         
