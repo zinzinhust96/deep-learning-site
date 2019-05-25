@@ -85,10 +85,10 @@ def process_result_problem_1(fasta_seq, dataset):
     else:               # S. cerevisiae
         dataset_weight = dir_path + '/problem-1/seed_13'
     
-    print(features.shape)
     trained_models = load_trained_models(input_shape = features.shape[1:], directory = dataset_weight)
     ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])
     y_pred = ensemble_model.predict(features)
     y_pred_prob = calculate_probability(y_pred)
     y_pred_label = np.where(np.array(y_pred_prob) < 0.5, 0, 1)
-    return y_pred_label[0]
+    K.clear_session()
+    return name, sequence, y_pred_label[0]

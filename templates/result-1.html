@@ -25,19 +25,25 @@
                             </header>
                             <p>Pseudouridine sites identification on RNA sequence by using Capsule network based on dinucleotide composition, one-hot vector transformation and 5-fold cross-validation ensemble</p>
                         </section>			
-                        <form action = "/result-1" method = "POST">
-                            <p align="center">
-                                <input type="radio" checked="true" name="options" value="1"> H. sapiens </input>
-                                <input type="radio" name="options" value="2"> S. cerevisiae  </input>
-                            </p>
-                            <p align="center">
-                                <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
-                            </p>
-                            <p align="center">
-                                <input type = "submit"/>
-                                <input type="reset" value="Clear">
-                            </p>
-                        </form>
+                        <section id="result" class="">
+                            <div id="KQ">
+                                <p>
+                                    {{ name }}<br />{{ sequence }}
+                                </p>
+                                <p>	
+                                    Prediction: {% if result == 0 %}
+                                        Negative
+                                    {% else %}
+                                        Positive
+                                    {% endif %}
+                                </p>
+                                <p><b>Note:</b></p>
+                                <p>
+                                    Positive: RNA segments has a uridine at the center position that can be pseudouridylated. <br />
+                                    Negative: RNA segments has a uridine at the center position that cannot be pseudouridylated.
+                                </p>
+                            </div>
+                        </section>
                         <br />
                     </div> <!-- Right column: content -->
                 </div>

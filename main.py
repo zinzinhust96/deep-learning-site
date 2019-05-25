@@ -31,8 +31,8 @@ def result1():
 	if request.method == 'POST':
 		fasta_seq = request.form['seq']
 		dataset = request.form['options']
-		result = process_result_problem_1(fasta_seq, dataset)
-		return render_template("temp.html",result = result)
+		name, sequence, result = process_result_problem_1(fasta_seq, dataset)
+		return render_template("result-1.html",name = name, sequence = sequence, result = result)
 
 
 @app.route("/uploader", methods = ['GET', 'POST'])
