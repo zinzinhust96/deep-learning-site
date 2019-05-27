@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import numpy as np
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from process_result_problem_1 import process_result_problem_1
@@ -42,8 +43,8 @@ def problem2():
 def result2():
 	if request.method == 'POST':
 		fasta_seq = request.form['seq']
-		threshold_type = request.form['options']
-		name, sequence, threshold, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold_type)
+		threshold = float(request.form.get('threshold'))
+		name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold)
 		return render_template(
 			"result-2.html",
 			name = name,

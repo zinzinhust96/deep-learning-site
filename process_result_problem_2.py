@@ -55,8 +55,9 @@ def CapsNet(input_shape, n_class, routings):
     return model
 
 def load_trained_models(input_shape, directory):
+    n_folds = 10
     models = list()
-    for i in range(5):
+    for i in range(n_folds):
         # define model
         model = CapsNet(input_shape=input_shape, n_class=2, routings=3)
         weight_file = directory + '/fold_%d' % (i) + '/best_model.h5'
@@ -75,7 +76,7 @@ def ensemble(models, input_shape):
 
     return model
 
-def process_result_problem_2(fasta_seq, threshold_type):
+def process_result_problem_2(fasta_seq, threshold):
     dir_path = os.path.dirname(os.path.realpath(__file__))
 
     # read pssm
@@ -87,22 +88,14 @@ def process_result_problem_2(fasta_seq, threshold_type):
     new_shape = list(features.shape)
     new_shape.append(1)
     features = np.reshape(features, new_shape)
-
-    # set threshold based on threshold type
-    threshold = 0
-    if threshold_type == '0':    # H. sapiens
-        threshold = 0.5721731185913086
-    else:               # S. cerevisiae
-        threshold = 0.6388260126113892
     
     trained_models = load_trained_models(input_shape = features.shape[1:], directory = dir_path + '/problem-2/seed_7')
     ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])
     y_pred = ensemble_model.predict(features)
     y_pred_prob = calculate_probability(y_pred)
     y_pred_label = np.where(np.array(y_pred_prob) < threshold, 0, 1)
-    print(y_pred_label)
     K.clear_session()
-    return name, sequence, threshold, y_pred_prob, y_pred_label
+    return name, sequence, y_pred_prob, y_pred_label
 
 def read_pssm(fasta_seq):
     temp_path = os.path.dirname(os.path.realpath(__file__)) + '/temp/'
@@ -126,14 +119,6 @@ def read_pssm(fasta_seq):
     # read csv file and return pssm matrix
     pssm_matrix = np.genfromtxt(temp_path + csv_file, delimiter=',')
     return pssm_matrix
-
-async def run_psi():
-    # run psiblast on fasta file to get pssm txt file
-    # ./ncbi-blast-2.9.0+/bin/psiblast -db ncbi-blast-2.9.0+/bin/db/swissprot -evalue 0.01 -query $f -out_ascii_pssm ./pssm/$name -num_iterations 3 -num_threads 6
-    await subprocess.run(["./ncbi-blast-2.9.0+/bin/psiblast", "-db", "ncbi-blast-2.9.0+/bin/db/swissprot", "-evalue", "0.01", "-query", "./temp/" + fasta_file, "-out_ascii_pssm", "./temp/" + txt_file, "-num_iterations", "3"])
-
-    # parse pssm from pssm txt file to csv file\
-    parse_pssm(temp_path, txt_file, csv_file)
 
 def parse_pssm(_path, in_file, out_file):
     test_out = open(_path + out_file, 'w')

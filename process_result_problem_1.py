@@ -45,8 +45,9 @@ def CapsNet(input_shape, n_class, routings):
     return model
 
 def load_trained_models(input_shape, directory):
+    n_folds = 5
     models = list()
-    for i in range(5):
+    for i in range(n_folds):
         # define model
         model = CapsNet(input_shape=input_shape, n_class=2, routings=3)
         weight_file = directory + '/fold_%d' % (i) + '/best_model.h5'

@@ -27,8 +27,30 @@
                         </section>			
                         <form action = "/result-2" method = "POST">
                             <p align="center">
-                                <input type="radio" checked="true" name="options" value="0"> Spe≈85% Threshold (0.5721731185913086) </input><br />
-                                <input type="radio" name="options" value="1"> FPR≈8% Threshold (0.6388260126113892)  </input>
+                                <span>User Defined Threshold</span><br />
+                                <select name="threshold">
+                                    <option value="0.05">0.05</option>
+                                    <option value="0.10">0.10</option>
+                                    <option value="0.15">0.15</option>
+                                    <option value="0.20">0.20</option>
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.30">0.30</option>
+                                    <option value="0.35">0.35</option>
+                                    <option value="0.40">0.40</option>
+                                    <option value="0.45">0.45</option>
+                                    <option value="0.50">0.50</option>
+                                    <option value="0.55">0.55</option>
+                                    <option value="0.5721731185913086">Spe≈85% (threshold 0.5721731185913086)</option>
+                                    <option value="0.60">0.60</option>
+                                    <option value="0.6388260126113892">FPR≈8% (threshold 0.6388260126113892)</option>
+                                    <option value="0.65">0.65</option>
+                                    <option value="0.70">0.70</option>
+                                    <option value="0.75">0.75</option>
+                                    <option value="0.80">0.80</option>
+                                    <option value="0.85">0.85</option>
+                                    <option value="0.90">0.90</option>
+                                    <option value="0.95">0.95</option>
+                                </select>
                             </p>
                             <p align="center">
                                 <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
