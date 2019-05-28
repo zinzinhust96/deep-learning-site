@@ -3,3 +3,5 @@ keras
 matplotlib
 biopython
 sklearn
+tensorflow
+uWSGI
