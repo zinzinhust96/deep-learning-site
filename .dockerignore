@@ -1,0 +1,5 @@
+ncbi*
+problem*
+.gitignore
+__pycache__
+.git

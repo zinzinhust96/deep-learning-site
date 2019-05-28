@@ -2,4 +2,6 @@ Flask
 keras
 matplotlib
 biopython
-sklearn
+scikit-learn
+tensorflow
+uwsgi

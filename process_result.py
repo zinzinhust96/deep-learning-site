@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 indexes = np.arange(0, 0.5, 0.0001)
 
