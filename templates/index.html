@@ -7,52 +7,30 @@
 </head>
 
 <body>        
-        <div class="container">
-            <div class="row">
-                    {% include 'sidenav.html' %}
-                    
-                    <!-- Right column: content -->
-                    <div class="tm-right-column">
-                        <figure>
-                            <img src="../static/itheader.jpg" alt="Header image" class="img-fluid">    
-                        </figure>
-
-                        <div class="tm-content-div">
-                            <!-- Welcome section -->
-                            <section id="welcome" class="tm-section">
-                                <header>
-                                    <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Welcome</big></h2>	
-                                </header>
-                                <p>Demo site for my graduation thesis</p>
-                            </section>
-
-                            <!-- Problem 1-->     
-                            <section id="problem-1" class="tm-section">
-                                <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Pseudouridine sites identification on RNA sequence</h2></header>
-                                <div class="tm-gallery-container tm-gallery-1">
-                                    <div class="tm-img-container tm-img-container-1">
-                                        <a href="problem-1"><img src="../static/pr1.jpg" alt="Problem 1" class="img-fluid tm-img-tn"></a>
-                                    </div> 
-                                    <p>
-
-                                    </p>                                  
-                                </div>
-                            </section>
-
-                            <!-- Problem 2-->     
-                            <section id="problem-2" class="tm-section">
-                                <header><h2 class="tm-blue-text tm-section-title tm-margin-b-30">Predicting Protein-DNA Binding Residues</h2></header>
-                                <div class="tm-gallery-container tm-gallery-1">
-                                    <div class="tm-img-container tm-img-container-1">
-                                        <a href="problem-2"><img src="../static/pr2.jpg" alt="Image" class="img-fluid tm-img-tn"></a>
-                                    </div>                                    
-                                </div>
-                            </section>
-                        </div>  
-                        
-                    </div> <!-- Right column: content -->
+    <div class="container">
+        <div class="tm-blue-bg">                        
+                <div class="tm-logo-div" style="text-align: center">
+                    <div style="padding-left: 10px; padding-right: 10px;">
+                        <img src="../static/bachkhoa.jpg" alt="Logo" style="width: 90px;">
+                    </div>
+                    <div>
+                        <h2 style="margin: 10px;">Hanoi University of Science & Technology</h2>
+                        <h7>Dr. Nguyen Hong Quang - Department of Computer Engineering</h7>
+                    </div>
                 </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
+                <div style="margin: 0 100px;">
+                    <h2>Projects</h2>
+                    <ul class="tm-main-nav-ul">
+                        <li class="tm-nav-item">
+                            <a href="problem-1" class="tm-nav-item-link">Pseudouridine sites identification on RNA sequence</a>
+                        </li>
+                        <li class="tm-nav-item">
+                            <a href="problem-2" class="tm-nav-item-link">Predicting Protein-DNA Binding Residues</a>
+                        </li>
+                    </ul>
+                </div>
+                    
+            </div> <!-- Left column: logo and menu -->
+    </div> <!-- container -->
 </body>
 </html>

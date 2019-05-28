@@ -24,24 +24,35 @@
                                 <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Pseudouridine sites identification on RNA sequence</big></h2>
                             </header>
                             <p>Pseudouridine sites identification on RNA sequence by using Capsule network based on dinucleotide composition, one-hot vector transformation and 5-fold cross-validation ensemble</p>
-                        </section>			
-                        <form action = "/result-1" method = "POST">
-                            <p align="center">
-                                <input type="radio" checked="true" name="options" value="0"> H. sapiens </input>
-                                <input type="radio" name="options" value="1"> S. cerevisiae  </input>
-                            </p>
-                            <p align="center">
-                                <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
-                            </p>
-                            <p align="center">
-                                <input type = "submit"/>
-                                <input type="reset" value="Clear">
-                            </p>
-                        </form>
+                        </section>
+                        <div id="loading"><span style="top: 80px;left: -20px;position: relative;">Please wait ...</span></div>
+                        <div id="content">
+                            <form action = "/result-1" method = "POST">
+                                <p align="center">
+                                    <input type="radio" checked="true" name="options" value="0"> H. sapiens </input>
+                                    <input type="radio" name="options" value="1"> S. cerevisiae  </input>
+                                </p>
+                                <p align="center">
+                                    <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
+                                </p>
+                                <p align="center">
+                                    <input type = "submit" value="Submit" onclick="loading1();"/>
+                                    <input type="reset" value="Clear">
+                                </p>
+                            </form>
+                        </div>		
                         <br />
                     </div> <!-- Right column: content -->
                 </div>
             </div> <!-- row -->
         </div> <!-- container -->
+    <script>
+        function loading1() {
+            var loading = document.getElementById("loading");
+            var content = document.getElementById("content");
+            loading.style.display = "block";
+            content.style.display = "none";
+        }
+    </script>
 </body>
 </html>

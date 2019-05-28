@@ -24,46 +24,56 @@
                                 <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Predicting Protein-DNA Binding Residues</big></h2>
                             </header>
                             <p>Predicting Protein-DNA Binding Residues by using Capsule network based on position‐specific scoring matrix (PSSM), random-undersampling and 10-fold cross-validation ensemble</p>
-                        </section>			
-                        <form action = "/result-2" method = "POST">
-                            <p align="center">
-                                <span>User Defined Threshold</span><br />
-                                <select name="threshold">
-                                    <option value="0.05">0.05</option>
-                                    <option value="0.10">0.10</option>
-                                    <option value="0.15">0.15</option>
-                                    <option value="0.20">0.20</option>
-                                    <option value="0.25">0.25</option>
-                                    <option value="0.30">0.30</option>
-                                    <option value="0.35">0.35</option>
-                                    <option value="0.40">0.40</option>
-                                    <option value="0.45">0.45</option>
-                                    <option value="0.50">0.50</option>
-                                    <option value="0.55">0.55</option>
-                                    <option value="0.5721731185913086">Spe≈85% (threshold 0.5721731185913086)</option>
-                                    <option value="0.60">0.60</option>
-                                    <option value="0.6388260126113892">FPR≈8% (threshold 0.6388260126113892)</option>
-                                    <option value="0.65">0.65</option>
-                                    <option value="0.70">0.70</option>
-                                    <option value="0.75">0.75</option>
-                                    <option value="0.80">0.80</option>
-                                    <option value="0.85">0.85</option>
-                                    <option value="0.90">0.90</option>
-                                    <option value="0.95">0.95</option>
-                                </select>
-                            </p>
-                            <p align="center">
-                                <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
-                            </p>
-                            <p align="center">
-                                <input type = "submit"/>
-                                <input type="reset" value="Clear">
-                            </p>
-                        </form>
-                        <br />
+                        </section>
+                        <div id="loading"><span style="top: 80px;left: -20px;position: relative;">Please wait ...</span></div>
+                        <div id="content">
+                            <form action = "/result-2" method = "POST">
+                                <p align="center">
+                                    <span>User Defined Threshold</span><br />
+                                    <select name="threshold">
+                                        <option value="0.05">0.05</option>
+                                        <option value="0.10">0.10</option>
+                                        <option value="0.15">0.15</option>
+                                        <option value="0.20">0.20</option>
+                                        <option value="0.25">0.25</option>
+                                        <option value="0.30">0.30</option>
+                                        <option value="0.35">0.35</option>
+                                        <option value="0.40">0.40</option>
+                                        <option value="0.45">0.45</option>
+                                        <option value="0.50">0.50</option>
+                                        <option value="0.55">0.55</option>
+                                        <option value="0.5721731185913086">Spe≈85% (threshold 0.5721731185913086)</option>
+                                        <option value="0.60">0.60</option>
+                                        <option value="0.6388260126113892">FPR≈8% (threshold 0.6388260126113892)</option>
+                                        <option value="0.65">0.65</option>
+                                        <option value="0.70">0.70</option>
+                                        <option value="0.75">0.75</option>
+                                        <option value="0.80">0.80</option>
+                                        <option value="0.85">0.85</option>
+                                        <option value="0.90">0.90</option>
+                                        <option value="0.95">0.95</option>
+                                    </select>
+                                </p>
+                                <p align="center">
+                                    <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
+                                </p>
+                                <p align="center">
+                                    <input type = "submit" value="Submit" onclick="loading();"/>
+                                    <input type="reset" value="Clear">
+                                </p>
+                            </form>
+                        </div>	
                     </div> <!-- Right column: content -->
                 </div>
             </div> <!-- row -->
         </div> <!-- container -->
+    <script>
+        function loading() {
+            var loading = document.getElementById("loading");
+            var content = document.getElementById("content");
+            loading.style.display = "block";
+            content.style.display = "none";
+        }
+    </script>
 </body>
 </html>
