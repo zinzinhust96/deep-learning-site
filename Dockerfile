@@ -15,4 +15,4 @@ COPY . .
 
 CMD ["uwsgi", "--ini", "/etc/uwsgi/uwsgi.ini"]
 
-EXPOSE 80
+EXPOSE 5000
