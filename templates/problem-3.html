@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <title>Problem</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div>
+            <section class="center">
+                <figure>
+                    <img src="../static/150.jpg" alt="Header image" class="img-fluid">
+                </figure>
+            </section>
+
+            <div class="tm-content-div">
+                <section id="math" class="tm-section">
+                    <header>
+                        <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Cephalometric Analysis</big></h2>
+                    </header>
+                    <p>Cephalometric analysis use deep learning approach</p>
+                </section>
+                <div id="loading"><span style="top: 80px;left: -20px;position: relative;">Please wait ...</span></div>
+
+                <div id="content">
+                    <form action="result-1" method="post" enctype="multipart/form-data">
+                        <p align="center">
+                            <input type=file name=file>
+                            <input type="submit" value="submit">
+                        </p>
+                    </form>
+                </div>
+                <br/>
+            </div> <!-- Right column: content -->
+        </div>
+    </div> <!-- row -->
+    {% include 'navigation.html' %}
+</div> <!-- container -->
+</body>
+</html>
