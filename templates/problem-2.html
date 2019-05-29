@@ -2,17 +2,15 @@
 <html>
 <head>
     	<meta charset="utf-8">
-	<title>HTML Web Template</title>
+	<title>Problem</title>
 	<link rel="stylesheet" href="../static/style.css">
 </head>
 
 <body>        
         <div class="container">
-            <div class="row">
-                {% include 'sidenav.html' %}
-                
-                <div id="welcome" class="tm-right-column">
-                    <section id="welcome">
+            <div class="row">                
+                <div>
+                    <section class="center">
                         <figure>
                             <img src="../static/pr2.jpg" alt="Header image" class="img-fluid">    
                         </figure>
@@ -66,6 +64,7 @@
                     </div> <!-- Right column: content -->
                 </div>
             </div> <!-- row -->
+            {% include 'navigation.html' %}
         </div> <!-- container -->
     <script>
         function loading() {

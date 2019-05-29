@@ -269,7 +269,10 @@ textarea:-ms-input-placeholder {
 	    padding-bottom: 20px;
 	}
 
-	.tm-nav-item { font-size: 1.4rem; }
+	.tm-nav-item { 
+		font-size: 1.4rem; 
+		padding: 18px 30px;
+	}
 
 	.tm-site-name {
 		font-size: 2.4rem;
@@ -293,4 +296,12 @@ div#loading {
     background: url(/static/ajax-loader.gif) no-repeat;
 	cursor: wait;
 	margin-left: 50%;
+}
+
+.author {
+	font-size: 16px;
+}
+
+.center {
+	text-align: center;
 }
