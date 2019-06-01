@@ -3,7 +3,7 @@
 <head>
     	<meta charset="utf-8">
 	<title>Result</title>
-	<link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 
 <body>        
@@ -23,11 +23,31 @@
                             </header>
                             <p>Predicting Protein-DNA Binding Residues by using Capsule network based on position‐specific scoring matrix (PSSM), random-undersampling and 10-fold cross-validation ensemble</p>
                         </section>			
-                        <section id="result" class="">
+                        <section id="result" class="tm-section">
                             <h2>Protein Name</h2>
                             <p>{{ name[1:] }}</p>
-                            <h2>Threshold Used</h2>
-                            <p>{{ threshold }}</p>
+                            <div style="display: flex">
+                                <div style="width: 100%">
+                                    <h2>Threshold Used</h2>
+                                    <p id="threshold">{{ threshold }}</p>
+                                </div>
+                                <div>
+                                    <h2>User Defined Threshold</h2>
+                                    <p>
+                                        <form action="/report-2" method = "POST">
+                                            <input type="hidden" name="name" value="{{ name }}">
+                                            <input type="hidden" name="sequence" value="{{ sequence }}">
+                                            <input type="hidden" name="y_pred_prob" value="{{ y_pred_prob }}">
+                                            <select id="select-threshold" name="threshold">
+                                                {% for threshold_item in [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95] %}
+                                                    <option value={{ threshold_item }} {% if threshold==threshold_item %} selected="selected"{% endif %}>{{ "%.2f"|format(threshold_item) }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <input type="submit" value="Report" />
+                                        </form>
+                                    </p>
+                                </div>
+                            </div>
                             <h2>Predicted Results</h2>
                             <table style="width:100%">
                                 <tr>
@@ -81,7 +101,43 @@
                     </div> <!-- Right column: content -->
                 </div>
             </div> <!-- row -->
-            {% include 'navigation.html' %}
+            {% with result=2 %}
+                {% include 'navigation.html' %}
+            {% endwith %}
         </div> <!-- container -->
+<script>
+    // function getLabelsFromNewThreshold() {
+    //     var sel = document.getElementById("select-threshold");
+    //     var text = sel.options[sel.selectedIndex].text;
+    //     document.getElementById("threshold").innerHTML = text;
+    //     var y_pred_prob = {{ y_pred_prob }};
+    //     var labels = []
+    //     y_pred_prob.map(value => {
+    //         if (value > parseFloat(text)) {
+    //             labels.push(1);
+    //         } else {
+    //             labels.push(0);
+    //         }
+    //     })
+    //     document.getElementById().innerHTML = data.votes;
+    //     console.log(labels);
+    // }
+    // $(function(){
+    //     $('button#report-btn').bind('click', function() {
+
+    //         var sequence = "{{ sequence }}";
+    //         var y_pred_prob = {{ y_pred_prob }};
+    //         var threshold = $('#select-threshold').val();
+    //         alert(y_pred_prob);
+
+    //         $.ajax({
+    //             url: '/report-2',
+    //             data: {name:name,sequence:sequence,y_pred_prob:y_pred_prob,threshold:threshold},
+    //             type: 'GET',
+    //             traditional: true,
+    //         });
+    //     });
+    //  });
+</script>
 </body>
 </html>

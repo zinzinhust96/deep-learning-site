@@ -196,7 +196,7 @@ textarea:-ms-input-placeholder {
 
 	.tm-section { margin-bottom: 100px; }
 
-	.tm-content-div { padding: 80px 40px 30px 80px;	}
+	.tm-content-div { padding: 80px 40px 30px 40px;	}
 
 	.tm-img-container-1 {
 		margin-bottom: 10px;
@@ -295,7 +295,6 @@ div#loading {
     display: none;
     background: url(/static/ajax-loader.gif) no-repeat;
 	cursor: wait;
-	margin-left: 50%;
 }
 
 .author {
