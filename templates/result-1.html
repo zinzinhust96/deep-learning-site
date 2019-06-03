@@ -46,7 +46,9 @@
                     </div> <!-- Right column: content -->
                 </div>
             </div> <!-- row -->
-            {% include 'navigation.html' %}
+            {% with result=1 %}
+                {% include 'navigation.html' %}
+            {% endwith %}
         </div> <!-- container -->
 </body>
 </html>

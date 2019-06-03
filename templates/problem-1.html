@@ -23,7 +23,9 @@
                             </header>
                             <p>Pseudouridine sites identification on RNA sequence by using Capsule network based on dinucleotide composition, one-hot vector transformation and 5-fold cross-validation ensemble</p>
                         </section>
-                        <div id="loading"><span style="top: 80px;left: -20px;position: relative;">Please wait ...</span></div>
+                        <div style="display: flex;justify-content: center;align-items: center;">
+                            <div id="loading" style="width: 125px;"><span style="top: 80px;left: -20px;position: relative;">Please wait ...</span></div>
+                        </div>
                         <div id="content">
                             <form action = "/result-1" method = "POST">
                                 <p align="center">
@@ -43,7 +45,9 @@
                     </div> <!-- Right column: content -->
                 </div>
             </div> <!-- row -->
-            {% include 'navigation.html' %}
+            {% with result=None %}
+                {% include 'navigation.html' %}
+            {% endwith %}
         </div> <!-- container -->
     <script>
         function loading1() {

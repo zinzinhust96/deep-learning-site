@@ -5,6 +5,7 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from process_result_problem_1 import process_result_problem_1
 from process_result_problem_2 import process_result_problem_2
+from ast import literal_eval
 dir_path = os.path.dirname(os.path.realpath(__file__))
 UPLOAD_FOLDER = dir_path + '/test'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -18,10 +19,6 @@ def allowed_file(filename):
 @app.route("/")
 def index():
 	return render_template("index.html")
-
-@app.route("/deeplearning")
-def deep():
-    return render_template("deep.html")
 
 @app.route("/problem-1")
 def problem1():
@@ -43,8 +40,28 @@ def problem2():
 def result2():
 	if request.method == 'POST':
 		fasta_seq = request.form['seq']
-		threshold = float(request.form.get('threshold'))
+		threshold = float(request.form['options'])
 		name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold)
+		return render_template(
+			"result-2.html",
+			name = name,
+			sequence = sequence,
+			sequence_dict = enumerate(list(sequence)),
+			sequence_length = len(sequence),
+			threshold = threshold,
+			y_pred_prob = y_pred_prob,
+			y_pred_label = y_pred_label
+		)
+
+@app.route("/report-2", methods = ['GET', 'POST'])
+def report2():
+	if request.method == 'POST':
+		name = request.form['name']
+		sequence = request.form['sequence']
+		y_pred_prob = request.form['y_pred_prob']
+		threshold = float(request.form.get('threshold'))
+		y_pred_prob = literal_eval(y_pred_prob)
+		y_pred_label = np.where(np.array(y_pred_prob) < threshold, 0, 1)
 		return render_template(
 			"result-2.html",
 			name = name,
