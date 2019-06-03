@@ -2,7 +2,9 @@
 
 **Requirements**
 
-Install Docker: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04 and Git: https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-18-04-quickstart
+Install Docker: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+
+Install Git: https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-18-04-quickstart
 
 ## Usage
 
@@ -38,7 +40,8 @@ sudo docker run -d -it --name dl-site -p 80:80 -v $PWD/ncbi-blast-2.9.0+:/opt/ap
 **If you have make changes and want to redeploy the container**
 ```
 git pull
-docker ps -a (grab the container_id)
+docker ps -a      # and then grab the container_id
 docker stop $(container_id)
 docker rm $(container_id)
+# redo step 5 and 6
 ```
