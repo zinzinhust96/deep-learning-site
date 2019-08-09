@@ -6,9 +6,9 @@ from keras import layers, models, optimizers
 from keras import backend as K
 from keras.utils import to_categorical, plot_model
 from keras.models import Model
-from capsulelayers import CapsuleLayer, PrimaryCap, Length, Mask
+from capsulelayers_2 import CapsuleLayer, PrimaryCap, Length, Mask
 from process_result import calculate_probability
-from preprocess2 import WindowSlidePSSMExtractor
+from preprocess_2 import WindowSlidePSSMExtractor
 import subprocess
 import re
 
@@ -89,7 +89,7 @@ def process_result_problem_2(fasta_seq, threshold):
     new_shape.append(1)
     features = np.reshape(features, new_shape)
     
-    trained_models = load_trained_models(input_shape = features.shape[1:], directory = dir_path + '/problem-2/seed_7')
+    trained_models = load_trained_models(input_shape = features.shape[1:], directory = dir_path + '/problem-2/seed_19')
     ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])
     y_pred = ensemble_model.predict(features)
     y_pred_prob = calculate_probability(y_pred)

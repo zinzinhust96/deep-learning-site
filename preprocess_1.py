@@ -1,4 +1,3 @@
-
 """FASTA preprocessing."""
 
 # import numpy for caculating
@@ -14,10 +13,6 @@ from sklearn.model_selection import KFold
 KF = KFold(n_splits=5)
 
 DINUCLEOTIDE = ['AA', 'AC', 'AG', 'AU', 'CA', 'CC', 'CG', 'CU', 'GA', 'GC', 'GG', 'GU', 'UA', 'UC', 'UG', 'UU']
-TRINUCLEOTIDE = ['AAA', 'AAC', 'AAG', 'AAU', 'ACA', 'ACC', 'ACG', 'ACU', 'AGA', 'AGC', 'AGG', 'AGU', 'AUA', 'AUC', 'AUG', 'AUU',
-                'CAA', 'CAC', 'CAG', 'CAU', 'CCA', 'CCC', 'CCG', 'CCU', 'CGA', 'CGC', 'CGG', 'CGU', 'CUA', 'CUC', 'CUG', 'CUU',
-                'GAA', 'GAC', 'GAG', 'GAU', 'GCA', 'GCC', 'GCG', 'GCU', 'GGA', 'GGC', 'GGG', 'GGU', 'GUA', 'GUC', 'GUG', 'GUU',
-                'UAA', 'UAC', 'UAG', 'UAU', 'UCA', 'UCC', 'UCG', 'UCU', 'UGA', 'UGC', 'UGG', 'UGU', 'UUA', 'UUC', 'UUG', 'UUU']
 # convert standard amino acids char list to int list
 char_to_int = dict((c, i) for i, c in enumerate(DINUCLEOTIDE))
 # convert standard amino acids int list to char list
@@ -28,28 +23,28 @@ int_to_char = dict((i, c) for i, c in enumerate(DINUCLEOTIDE))
 class ResidueFeatureExtractor:
     def __init__(self, name, sequence):
 
-        # trinucleotide statistic
-        trinucleotide_seq, trinucleotide_stat = self.get_trinucleotide_stat_and_sequence(sequence)
+        # dinucleotide statistic
+        dinucleotide_seq, dinucleotide_stat = self.get_dinucleotide_stat_and_sequence(sequence)
 
         # frequency-hot the sequence
-        frequency_hot_encoded_seq = self.get_frequency_hot_sequence(trinucleotide_seq, trinucleotide_stat)
+        frequency_hot_encoded_seq = self.get_frequency_hot_sequence(dinucleotide_seq, dinucleotide_stat)
 
-        # add the attributes to self
+        # add the atdibutes to self
         self.name = name
         self.sequence = sequence
         self.features = frequency_hot_encoded_seq
 
-    # extract trinucleotide sequence from nucleotide sequence
+    # extract dinucleotide sequence from nucleotide sequence
     @staticmethod
-    def get_trinucleotide_stat_and_sequence(sequence):
-        trinucleotide_seq = list()
-        trinucleotide_stat = [0 for _ in range(len(DINUCLEOTIDE))]
+    def get_dinucleotide_stat_and_sequence(sequence):
+        dinucleotide_seq = list()
+        dinucleotide_stat = [0 for _ in range(len(DINUCLEOTIDE))]
         for i in range(len(sequence)-1):
-            trinuc = sequence[i:i+2]
-            trinucleotide_stat[char_to_int[trinuc]] += 1
-            trinucleotide_seq.append(trinuc)
+            dinuc = sequence[i:i+2]
+            dinucleotide_stat[char_to_int[dinuc]] += 1
+            dinucleotide_seq.append(dinuc)
 
-        return trinucleotide_seq, trinucleotide_stat
+        return dinucleotide_seq, dinucleotide_stat
 
     # one-hot encoding an integer sequence
     @staticmethod
@@ -127,4 +122,3 @@ def get_test_data(input_file):
     input_features = np.array(input_features, dtype="float32")
     input_labels = np.array(input_labels, dtype="float32")
     return input_features, input_labels
-    

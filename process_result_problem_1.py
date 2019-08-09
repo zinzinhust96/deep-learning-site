@@ -6,9 +6,9 @@ from keras import layers, models, optimizers
 from keras import backend as K
 from keras.utils import to_categorical, plot_model
 from keras.models import Model
-from capsulelayers import CapsuleLayer, PrimaryCap, Length, Mask
+from capsulelayers_1 import CapsuleLayer, PrimaryCap, Length, Mask
 from process_result import calculate_probability
-from preprocess1 import ResidueFeatureExtractor
+from preprocess_1 import ResidueFeatureExtractor
 
 K.set_image_data_format('channels_last')
 
@@ -25,11 +25,11 @@ def CapsNet(input_shape, n_class, routings):
 
     # Layer 1: Just a conventional Conv2D layer
     conv1 = layers.Conv2D(filters=256, kernel_size=7, strides=1, padding='valid', kernel_initializer='he_normal', activation='relu', name='conv1')(x)
-    #conv1=BatchNormalization()(conv1)
+    # conv1 = layers.BatchNormalization()(conv1)
     conv1 = layers.Dropout(0.7)(conv1)
 
     # Layer 2: Conv2D layer with `squash` activation, then reshape to [None, num_capsule, dim_capsule]
-    primarycaps = PrimaryCap(conv1, dim_capsule=8, n_channels=32, kernel_size=9, kernel_initializer='he_normal', strides=2, padding='valid', dropout=0.2)
+    primarycaps = PrimaryCap(conv1, dim_capsule=8, n_channels=32, kernel_size=7, kernel_initializer='he_normal', strides=2, padding='valid', dropout=0.2)
 
     # Layer 3: Capsule layer. Routing algorithm works here.
     digitcaps = CapsuleLayer(num_capsule=n_class, dim_capsule=16, routings=routings,
@@ -82,9 +82,9 @@ def process_result_problem_1(fasta_seq, dataset):
     # load model weights based on dataset type
     dataset_weight = ''
     if dataset == '0':    # H. sapiens
-        dataset_weight = dir_path + '/problem-1/seed_11'
+        dataset_weight = dir_path + '/problem-1/H/seed_5'
     else:               # S. cerevisiae
-        dataset_weight = dir_path + '/problem-1/seed_13'
+        dataset_weight = dir_path + '/problem-1/S/seed_19'
     
     trained_models = load_trained_models(input_shape = features.shape[1:], directory = dataset_weight)
     ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])

@@ -42,13 +42,13 @@ class WindowSlidePSSMExtractor:
 
     # convert to final feature sequence base on sliding-window technique
     @staticmethod
-    def get_residue_feture_sequence(one_hot_encoded_sequence):
+    def get_residue_feture_sequence(pssm_encoded_sequence):
         # init an empty list
         residue_feature_sequence = list()
         # loop through the sequence
-        for i in range(len(one_hot_encoded_sequence) - WINDOW_SIZE + 1):
+        for i in range(len(pssm_encoded_sequence) - WINDOW_SIZE + 1):
             # each element is converted to [WINDOW_SIZE] elements around it
-            residue_feature = one_hot_encoded_sequence[i: i + WINDOW_SIZE]
+            residue_feature = pssm_encoded_sequence[i: i + WINDOW_SIZE]
             # append to the final sequence
             residue_feature_sequence.append(residue_feature)
         return residue_feature_sequence
