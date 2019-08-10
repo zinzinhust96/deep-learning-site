@@ -3,52 +3,73 @@
 <head>
     	<meta charset="utf-8">
 	<title>Problem</title>
-	<link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body>        
-        <div class="container">
-            <div class="row">                
-                <div>
-                    <section class="center">
-                        <figure>
-                            <img src="../static/pr1.jpg" alt="Header image" class="img-fluid">    
-                        </figure>
+<body>
+    <div class="container">
+        {% with result=None %}
+            {% include 'navigation.html' %}
+        {% endwith %}
+        <div class="row">                
+            <div>
+                <section class="center pt-2">
+                    <figure>
+                        <img src="../static/pr1.jpg" alt="Header image" style="width: 500px;">    
+                    </figure>
+                </section>
+
+                <div class="tm-content-div">
+                    <section id="math" class="tm-section">
+                        <header>
+                            <h2><big class="tm-blue-text">Pseudouridine sites identification on RNA sequence</big></h2>
+                        </header>
+                        <p>Pseudouridine sites identification on RNA sequence by using Capsule network based on dinucleotide composition, one-hot vector transformation and 5-fold cross-validation ensemble</p>
                     </section>
-    
-                    <div class="tm-content-div">
-                        <section id="math" class="tm-section">
-                            <header>
-                                <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Pseudouridine sites identification on RNA sequence</big></h2>
-                            </header>
-                            <p>Pseudouridine sites identification on RNA sequence by using Capsule network based on dinucleotide composition, one-hot vector transformation and 5-fold cross-validation ensemble</p>
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <div id="loading" style="width: 125px;"><span style="top: 80px;left: -20px;position: relative;">Please wait ...</span></div>
+                    </div>
+                    <div id="content">
+                        <section class="tm-section">
+                            <h2>
+                                <span class="tm-blue-text" style="font-size: 20px;">
+                                    Please input your query RNA sequences in FASTA format
+                                </span>
+                            </h2>
                         </section>
-                        <div style="display: flex;justify-content: center;align-items: center;">
-                            <div id="loading" style="width: 125px;"><span style="top: 80px;left: -20px;position: relative;">Please wait ...</span></div>
-                        </div>
-                        <div id="content">
-                            <form action = "/result-1" method = "POST">
-                                <p align="center">
-                                    <input type="radio" checked="true" name="options" value="0"> H. sapiens </input>
-                                    <input type="radio" name="options" value="1"> S. cerevisiae  </input>
-                                </p>
-                                <p align="center">
-                                    <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
-                                </p>
-                                <p align="center">
-                                    <input type = "submit" value="Submit" onclick="loading1();"/>
-                                    <input type="reset" value="Clear">
-                                </p>
-                            </form>
-                        </div>		
-                        <br />
-                    </div> <!-- Right column: content -->
+                        <form action = "/result-1" method = "POST">
+                            <p style="margin-bottom: 0;" align="center">
+                                <input type="radio" checked="true" name="options" value="0"> H. sapiens </input>
+                                &nbsp;
+                                <input type="radio" name="options" value="1"> S. cerevisiae  </input>
+                            </p>
+                            <p style="margin-bottom: 0;" align="center">
+                                <textarea cols="66" style="width: 550px; height: 200px;" name="seq"></textarea>                                
+                            </p>
+                            <p align="center">
+                                <input type = "submit" value="Submit" onclick="loading1();"/>
+                                <input type="reset" value="Clear">
+                            </p>
+                        </form>
+                    </div>		
+                    <section class="tm-section">
+                        <h2>
+                            <span class="tm-blue-text" style="font-size: 20px;">
+                                Sample fasta Sequence(s)
+                            </span>
+                        </h2>
+                        <p>
+                            <b>H. sapiens</b><br/><span>>P1<br/>GCUAAACAGGUACUGCUGGGC</span>
+                        </p>
+                        <p>
+                            <b>S. cerevisiae</b><br/><span>>P1<br/>CUAUCAUCGCUGAUCUCCCACUCCCUGAUCU</span>
+                        </p>
+                    </section>
                 </div>
-            </div> <!-- row -->
-            {% with result=None %}
-                {% include 'navigation.html' %}
-            {% endwith %}
-        </div> <!-- container -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
     <script>
         function loading1() {
             var loading = document.getElementById("loading");

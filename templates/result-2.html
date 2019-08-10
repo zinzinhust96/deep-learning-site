@@ -4,107 +4,110 @@
     	<meta charset="utf-8">
 	<title>Result</title>
     <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>        
-        <div class="container">
-            <div class="row">                
-                <div>
-                    <section class="center">
-                        <figure>
-                            <img src="../static/pr2.jpg" alt="Header image" class="img-fluid">    
-                        </figure>
+    <div class="container">
+        {% with result=2 %}
+            {% include 'navigation.html' %}
+        {% endwith %}
+        <div class="row">                
+            <div>
+                <section class="center">
+                    <figure>
+                        <img src="../static/pr2.jpg" alt="Header image" style="width: 500px;">    
+                    </figure>
+                </section>
+
+                <div class="tm-content-div">
+                    <section id="math" class="tm-section">
+                        <header>
+                            <h2><big class="tm-blue-text">Predicting Protein-DNA Binding Residues</big></h2>
+                        </header>
+                        <p>Predicting Protein-DNA Binding Residues by using Capsule network based on position‐specific scoring matrix (PSSM), random-undersampling and 10-fold cross-validation ensemble</p>
                     </section>
-    
-                    <div class="tm-content-div">
-                        <section id="math" class="tm-section">
-                            <header>
-                                <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Predicting Protein-DNA Binding Residues</big></h2>
-                            </header>
-                            <p>Predicting Protein-DNA Binding Residues by using Capsule network based on position‐specific scoring matrix (PSSM), random-undersampling and 10-fold cross-validation ensemble</p>
-                        </section>			
-                        <section id="result" class="tm-section">
-                            <h2>Protein Name</h2>
-                            <p>{{ name[1:] }}</p>
-                            <div style="display: flex">
-                                <div style="width: 100%">
-                                    <h2>Threshold Used</h2>
-                                    <p id="threshold">{{ threshold }}</p>
-                                </div>
-                                <div>
-                                    <h2>User Defined Threshold</h2>
-                                    <p>
-                                        <form action="/report-2" method = "POST">
-                                            <input type="hidden" name="name" value="{{ name }}">
-                                            <input type="hidden" name="sequence" value="{{ sequence }}">
-                                            <input type="hidden" name="y_pred_prob" value="{{ y_pred_prob }}">
-                                            <select id="select-threshold" name="threshold">
-                                                {% for threshold_item in [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95] %}
-                                                    <option value={{ threshold_item }} {% if threshold==threshold_item %} selected="selected"{% endif %}>{{ "%.2f"|format(threshold_item) }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <input type="submit" value="Report" />
-                                        </form>
-                                    </p>
-                                </div>
+                    <section id="result" class="tm-section">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <span class="tm-blue-text" style="font-size: 20px;">Protein Name</span>
+                                <p>{{ name[1:] }}</p>
                             </div>
-                            <h2>Predicted Results</h2>
-                            <table style="width:100%">
-                                <tr>
-                                    <th>Res #</th>
-                                    <th>AA</th> 
-                                    <th>Prob.</th>
-                                    <th>N/B</th>
-                                    <th>Res #</th>
-                                    <th>AA</th> 
-                                    <th>Prob.</th>
-                                    <th>N/B</th>
-                                    <th>Res #</th>
-                                    <th>AA</th> 
-                                    <th>Prob.</th>
-                                    <th>N/B</th>
-                                </tr>
-                                {% for index, residue in sequence_dict %}
-                                    {% if index % 3 == 0 %}
-                                        <tr>
-                                    {% endif %}
-                                    
-                                    {% if y_pred_label[index] == 0 %}
-                                        <td>{{ index }}</td>
-                                        <td>{{ residue }}</td> 
-                                        <td>{{ y_pred_prob[index] }}</td>
-                                        <td>N</td>
-                                    {% else %}
-                                        <td style="color: red;">{{ index }}</td>
-                                        <td style="color: red;">{{ residue }}</td> 
-                                        <td style="color: red;">{{ y_pred_prob[index] }}</td>
-                                        <td style="color: red;">B</td>
-                                    {% endif %}
-                                    
-                                    {% if index % 3 == 2 %}
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
-                                {% if sequence_length % 3 != 0 %}
+                            <div class="col-sm-4">
+                                <span class="tm-blue-text" style="font-size: 20px;">Threshold Used</span>
+                                <p id="threshold">{{ threshold }}</p>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="tm-blue-text" style="font-size: 20px;">User Defined Threshold</span>
+                                <form action="/report-2" method = "POST">
+                                    <input type="hidden" name="name" value="{{ name }}">
+                                    <input type="hidden" name="sequence" value="{{ sequence }}">
+                                    <input type="hidden" name="y_pred_prob" value="{{ y_pred_prob }}">
+                                    <select style="padding: 5px;" id="select-threshold" name="threshold">
+                                        {% for threshold_item in [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95] %}
+                                            <option value={{ threshold_item }} {% if threshold==threshold_item %} selected="selected"{% endif %}>{{ "%.2f"|format(threshold_item) }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="submit" value="Report" />
+                                </form>
+                            </div>
+                        </div>
+                        <span class="tm-blue-text pb-2" style="font-size: 20px;">Predict results</span>
+                        <table style="width:100%">
+                            <tr>
+                                <th>Res #</th>
+                                <th>AA</th> 
+                                <th>Prob.</th>
+                                <th>N/B</th>
+                                <th>Res #</th>
+                                <th>AA</th> 
+                                <th>Prob.</th>
+                                <th>N/B</th>
+                                <th>Res #</th>
+                                <th>AA</th> 
+                                <th>Prob.</th>
+                                <th>N/B</th>
+                            </tr>
+                            {% for index, residue in sequence_dict %}
+                                {% if index % 3 == 0 %}
+                                    <tr>
+                                {% endif %}
+                                
+                                {% if y_pred_label[index] == 0 %}
+                                    <td>{{ index }}</td>
+                                    <td>{{ residue }}</td> 
+                                    <td>{{ y_pred_prob[index] }}</td>
+                                    <td>N</td>
+                                {% else %}
+                                    <td style="color: red;">{{ index }}</td>
+                                    <td style="color: red;">{{ residue }}</td> 
+                                    <td style="color: red;">{{ y_pred_prob[index] }}</td>
+                                    <td style="color: red;">B</td>
+                                {% endif %}
+                                
+                                {% if index % 3 == 2 %}
                                     </tr>
                                 {% endif %}
-                            </table>
-                            <h2>Results Format</h2>
-                            <p>
-                                "Res #" means the position of the residue in the query protein.<br />
-                                "AA" means the amino acid type of the corresponding residue.<br />
-                                "Prob." means the probability of that the residue is predicted as DNA-binding class by TargetDNA.<br />
-                                "N/B" means the predicted state of the corresponding residue ("N" and "B" represent non-binding and DNA-binding, respectively).<br />
-                            </p>
-                        </section>
-                        <br />
-                    </div> <!-- Right column: content -->
-                </div>
-            </div> <!-- row -->
-            {% with result=2 %}
-                {% include 'navigation.html' %}
-            {% endwith %}
-        </div> <!-- container -->
+                            {% endfor %}
+                            {% if sequence_length % 3 != 0 %}
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </section>
+                    <section class="tm-section">
+                        <span class="tm-blue-text pb-2" style="font-size: 20px;">Results format</span>
+                        <p>
+                            "Res #" means the position of the residue in the query protein.<br />
+                            "AA" means the amino acid type of the corresponding residue.<br />
+                            "Prob." means the probability of that the residue is predicted as DNA-binding class by TargetDNA.<br />
+                            "N/B" means the predicted state of the corresponding residue ("N" and "B" represent non-binding and DNA-binding, respectively).<br />
+                        </p>
+                    </section>
+                    <br />
+                </div> <!-- Right column: content -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
 <script>
     // function getLabelsFromNewThreshold() {
     //     var sel = document.getElementById("select-threshold");

@@ -3,52 +3,53 @@
 <head>
     	<meta charset="utf-8">
 	<title>Result</title>
-	<link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>        
-        <div class="container">
-            <div class="row">                
-                <div>
-                    <section class="center">
-                        <figure>
-                            <img src="../static/pr1.jpg" alt="Header image" class="img-fluid">    
-                        </figure>
+    <div class="container">
+        {% with result=1 %}
+            {% include 'navigation.html' %}
+        {% endwith %}
+        <div class="row">                
+            <div>
+                <section class="center pt-2">
+                    <figure>
+                        <img src="../static/pr1.jpg" alt="Header image" style="width: 500px;">    
+                    </figure>
+                </section>
+
+                <div class="tm-content-div">
+                    <section id="math" class="tm-section">
+                        <header>
+                            <h2><big class="tm-blue-text">Pseudouridine sites identification on RNA sequence</big></h2>
+                        </header>
+                        <p>Pseudouridine sites identification on RNA sequence by using Capsule network based on dinucleotide composition, one-hot vector transformation and 5-fold cross-validation ensemble</p>
+                    </section>	
+                    <section id="result" class="">
+                        <div id="KQ">
+                            <p>
+                                {{ name }}<br />{{ sequence }}
+                            </p>
+                            <p>	
+                                Prediction: {% if result == 0 %}
+                                    <b>Negative</b>
+                                {% else %}
+                                    <b>Positive</b>
+                                {% endif %}
+                            </p>
+                            <p><b>Note:</b></p>
+                            <p>
+                                Positive: RNA segments has a uridine at the center position that can be pseudouridylated. <br />
+                                Negative: RNA segments has a uridine at the center position that cannot be pseudouridylated.
+                            </p>
+                        </div>
                     </section>
-    
-                    <div class="tm-content-div">
-                        <section id="math" class="tm-section">
-                            <header>
-                                <h2 class="tm-blue-text tm-welcome-title tm-margin-b-45"><big>Pseudouridine sites identification on RNA sequence</big></h2>
-                            </header>
-                            <p>Pseudouridine sites identification on RNA sequence by using Capsule network based on dinucleotide composition, one-hot vector transformation and 5-fold cross-validation ensemble</p>
-                        </section>			
-                        <section id="result" class="">
-                            <div id="KQ">
-                                <p>
-                                    {{ name }}<br />{{ sequence }}
-                                </p>
-                                <p>	
-                                    Prediction: {% if result == 0 %}
-                                        Negative
-                                    {% else %}
-                                        Positive
-                                    {% endif %}
-                                </p>
-                                <p><b>Note:</b></p>
-                                <p>
-                                    Positive: RNA segments has a uridine at the center position that can be pseudouridylated. <br />
-                                    Negative: RNA segments has a uridine at the center position that cannot be pseudouridylated.
-                                </p>
-                            </div>
-                        </section>
-                        <br />
-                    </div> <!-- Right column: content -->
-                </div>
-            </div> <!-- row -->
-            {% with result=1 %}
-                {% include 'navigation.html' %}
-            {% endwith %}
-        </div> <!-- container -->
+                    <br />
+                </div> <!-- Right column: content -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
 </body>
 </html>

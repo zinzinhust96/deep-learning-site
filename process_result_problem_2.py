@@ -11,6 +11,7 @@ from process_result import calculate_probability
 from preprocess_2 import WindowSlidePSSMExtractor
 import subprocess
 import re
+import time
 
 K.set_image_data_format('channels_last')
 
@@ -77,6 +78,7 @@ def ensemble(models, input_shape):
     return model
 
 def process_result_problem_2(fasta_seq, threshold):
+    start_t = time.time()
     dir_path = os.path.dirname(os.path.realpath(__file__))
 
     # read pssm
@@ -95,6 +97,7 @@ def process_result_problem_2(fasta_seq, threshold):
     y_pred_prob = calculate_probability(y_pred)
     y_pred_label = np.where(np.array(y_pred_prob) < threshold, 0, 1)
     K.clear_session()
+    print('TIME ELAPSED: ', time.time() - start_t)
     return name, sequence, y_pred_prob, y_pred_label
 
 def read_pssm(fasta_seq):
