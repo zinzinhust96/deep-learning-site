@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
 import numpy as np
+import tensorflow as tf
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from process_result_problem_1 import process_result_problem_1
 from process_result_problem_2 import process_result_problem_2
 from ast import literal_eval
+from ensemble import load_trained_models_2, ensemble_folds
 dir_path = os.path.dirname(os.path.realpath(__file__))
 UPLOAD_FOLDER = dir_path + '/test'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -15,6 +17,14 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# load in problem 2 models
+FEATURES_2_SHAPE = (21, 20, 1)
+MODEL_PATH_2 = os.path.dirname(os.path.realpath(__file__)) + '/problem-2/seed_19'
+trained_models_2 = load_trained_models_2(input_shape = FEATURES_2_SHAPE, directory = MODEL_PATH_2)
+ensemble_model_2 = ensemble_folds(trained_models_2, input_shape = FEATURES_2_SHAPE)
+ensemble_model_2._make_predict_function()
+# graph = tf.get_default_graph()
 
 @app.route("/")
 def index():
@@ -41,7 +51,7 @@ def result2():
 	if request.method == 'POST':
 		fasta_seq = request.form['seq']
 		threshold = float(request.form['options'])
-		name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold)
+		name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold, ensemble_model_2)
 		return render_template(
 			"result-2.html",
 			name = name,
