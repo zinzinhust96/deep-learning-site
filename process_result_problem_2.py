@@ -95,13 +95,11 @@ def process_result_problem_2(fasta_seq, threshold, ensemble_model):
     
     # trained_models = load_trained_models(input_shape = features.shape[1:], directory = dir_path + '/problem-2/seed_19')
     # ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])
-    # global graph
-    # with graph.as_default():
     y_pred = ensemble_model.predict(features)
 
     y_pred_prob = calculate_probability(y_pred)
     y_pred_label = np.where(np.array(y_pred_prob) < threshold, 0, 1)
-    K.clear_session()
+    # K.clear_session()
     print('TIME ELAPSED: ', time.time() - start_t)
     return name, sequence, y_pred_prob, y_pred_label
 

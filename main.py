@@ -23,8 +23,7 @@ FEATURES_2_SHAPE = (21, 20, 1)
 MODEL_PATH_2 = os.path.dirname(os.path.realpath(__file__)) + '/problem-2/seed_19'
 trained_models_2 = load_trained_models_2(input_shape = FEATURES_2_SHAPE, directory = MODEL_PATH_2)
 ensemble_model_2 = ensemble_folds(trained_models_2, input_shape = FEATURES_2_SHAPE)
-ensemble_model_2._make_predict_function()
-# graph = tf.get_default_graph()
+graph = tf.get_default_graph()
 
 @app.route("/")
 def index():
@@ -51,17 +50,19 @@ def result2():
 	if request.method == 'POST':
 		fasta_seq = request.form['seq']
 		threshold = float(request.form['options'])
-		name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold, ensemble_model_2)
-		return render_template(
-			"result-2.html",
-			name = name,
-			sequence = sequence,
-			sequence_dict = enumerate(list(sequence)),
-			sequence_length = len(sequence),
-			threshold = threshold,
-			y_pred_prob = y_pred_prob,
-			y_pred_label = y_pred_label
-		)
+		global graph
+		with graph.as_default():
+			name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold, ensemble_model_2)
+			return render_template(
+				"result-2.html",
+				name = name,
+				sequence = sequence,
+				sequence_dict = enumerate(list(sequence)),
+				sequence_length = len(sequence),
+				threshold = threshold,
+				y_pred_prob = y_pred_prob,
+				y_pred_label = y_pred_label
+			)
 
 @app.route("/report-2", methods = ['GET', 'POST'])
 def report2():
