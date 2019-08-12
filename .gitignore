@@ -4,3 +4,4 @@ problem-2/*
 ncbi-blast-2.9.0+
 temp
 __pycache__/
+.env

@@ -8,15 +8,11 @@ from process_result_problem_1 import process_result_problem_1
 from process_result_problem_2 import process_result_problem_2
 from ast import literal_eval
 from ensemble import load_trained_models_2, ensemble_folds
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 dir_path = os.path.dirname(os.path.realpath(__file__))
-UPLOAD_FOLDER = dir_path + '/test'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # load in problem 2 models
 FEATURES_2_SHAPE = (21, 20, 1)
@@ -50,9 +46,28 @@ def result2():
 	if request.method == 'POST':
 		fasta_seq = request.form['seq']
 		threshold = float(request.form['options'])
+		email = request.form['email']
 		global graph
 		with graph.as_default():
 			name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold, ensemble_model_2)
+			message = Mail(
+				from_email='quangnguyenhong@admin.hust.edu.vn',
+				to_emails=email,
+				subject='Predicting Protein-DNA Binding Residues - Result',
+				html_content=render_template(
+					"result-2.html",
+					name = name,
+					sequence = sequence,
+					sequence_dict = enumerate(list(sequence)),
+					sequence_length = len(sequence),
+					threshold = threshold,
+					y_pred_prob = y_pred_prob,
+					y_pred_label = y_pred_label
+				)
+			)
+			sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+			response = sg.send(message)
+			print(response.status_code, response.body, response.headers)
 			return render_template(
 				"result-2.html",
 				name = name,

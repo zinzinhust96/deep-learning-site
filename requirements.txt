@@ -5,3 +5,4 @@ biopython
 scikit-learn
 tensorflow
 uwsgi
+sendgrid
