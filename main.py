@@ -50,24 +50,24 @@ def result2():
 		global graph
 		with graph.as_default():
 			name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold, ensemble_model_2)
-			message = Mail(
-				from_email='quangnguyenhong@admin.hust.edu.vn',
-				to_emails=email,
-				subject='Predicting Protein-DNA Binding Residues - Result',
-				html_content=render_template(
-					"result-2.html",
-					name = name,
-					sequence = sequence,
-					sequence_dict = enumerate(list(sequence)),
-					sequence_length = len(sequence),
-					threshold = threshold,
-					y_pred_prob = y_pred_prob,
-					y_pred_label = y_pred_label
+			if email:
+				message = Mail(
+					from_email='quangnguyenhong@admin.hust.edu.vn',
+					to_emails=email,
+					subject='Predicting Protein-DNA Binding Residues - Result',
+					html_content=render_template(
+						"result-2-mail.html",
+						name = name,
+						sequence = sequence,
+						sequence_dict = enumerate(list(sequence)),
+						sequence_length = len(sequence),
+						threshold = threshold,
+						y_pred_prob = y_pred_prob,
+						y_pred_label = y_pred_label
+					)
 				)
-			)
-			sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-			response = sg.send(message)
-			print(response.status_code, response.body, response.headers)
+				sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+				response = sg.send(message)
 			return render_template(
 				"result-2.html",
 				name = name,

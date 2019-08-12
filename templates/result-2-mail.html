@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    	<meta charset="utf-8">
+    <title>Result</title>
+</head>
+
+<body>        
+    <div class="container">
+        <div class="row">                
+            <div>
+                <div class="tm-content-div">
+                    <section id="math" class="tm-section">
+                        <header>
+                            <h2><big style="color: #098EFF;">Predicting Protein-DNA Binding Residues</big></h2>
+                        </header>
+                        <p>Predicting Protein-DNA Binding Residues by using Capsule network based on position‐specific scoring matrix (PSSM), random-undersampling and 10-fold cross-validation ensemble</p>
+                    </section>
+                    <section id="result" class="tm-section">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <span style="font-size: 16px; color: #098EFF;">Protein Name</span>
+                                <p>{{ name[1:] }}</p>
+                            </div>
+                            <div class="col-sm-4">
+                                <span style="font-size: 16px; color: #098EFF;">Threshold Used</span>
+                                <p id="threshold">{{ threshold }}</p>
+                            </div>
+                        </div>
+                        <span style="font-size: 16px; color: #098EFF; padding-bottom: 15px;">Predict results</span>
+                        <table style="width:100%; border-collapse: collapse;">
+                            <tr>
+                                <th style="border: 1px solid black;">Res #</th>
+                                <th style="border: 1px solid black;">AA</th> 
+                                <th style="border: 1px solid black;">Prob.</th>
+                                <th style="border: 1px solid black;">N/B</th>
+                                <th style="border: 1px solid black;">Res #</th>
+                                <th style="border: 1px solid black;">AA</th> 
+                                <th style="border: 1px solid black;">Prob.</th>
+                                <th style="border: 1px solid black;">N/B</th>
+                                <th style="border: 1px solid black;">Res #</th>
+                                <th style="border: 1px solid black;">AA</th> 
+                                <th style="border: 1px solid black;">Prob.</th>
+                                <th style="border: 1px solid black;">N/B</th>
+                            </tr>
+                            {% for index, residue in sequence_dict %}
+                                {% if index % 3 == 0 %}
+                                    <tr>
+                                {% endif %}
+                                
+                                {% if y_pred_label[index] == 0 %}
+                                    <td style="border: 1px solid black; text-align: center;">{{ index }}</td>
+                                    <td style="border: 1px solid black; text-align: center;">{{ residue }}</td> 
+                                    <td style="border: 1px solid black; text-align: center;">{{ y_pred_prob[index] }}</td>
+                                    <td style="border: 1px solid black; text-align: center;">N</td>
+                                {% else %}
+                                    <td style="color: red; border: 1px solid black; text-align: center;">{{ index }}</td>
+                                    <td style="color: red; border: 1px solid black; text-align: center;">{{ residue }}</td> 
+                                    <td style="color: red; border: 1px solid black; text-align: center;">{{ y_pred_prob[index] }}</td>
+                                    <td style="color: red; border: 1px solid black; text-align: center;">B</td>
+                                {% endif %}
+                                
+                                {% if index % 3 == 2 %}
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            {% if sequence_length % 3 != 0 %}
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </section>
+                    <section class="tm-section">
+                        <span style="font-size: 16px; color: #098EFF; margin: 1em 0;">Results format</span>
+                        <p>
+                            "Res #" means the position of the residue in the query protein.<br />
+                            "AA" means the amino acid type of the corresponding residue.<br />
+                            "Prob." means the probability of that the residue is predicted as DNA-binding class by TargetDNA.<br />
+                            "N/B" means the predicted state of the corresponding residue ("N" and "B" represent non-binding and DNA-binding, respectively).<br />
+                        </p>
+                    </section>
+                    <br />
+                </div> <!-- Right column: content -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</body>
+</html>
