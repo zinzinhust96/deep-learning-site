@@ -33,7 +33,7 @@ docker build . -t deep-learning-site:latest
 
 **Step 6: To run the container in the background**
 ```
-docker run -it -d --name dl-site -p 80:5000 -v $PWD/ncbi-blast-2.9.0+:/opt/app/ncbi-blast-2.9.0+ -v $PWD/problem-1:/opt/app/problem-1 -v $PWD/problem-2:/opt/app/problem-2 deep-learning-site:latest
+docker run --env-file ./env.list -it -d --name dl-site -p 80:5000 -v $PWD/ncbi-blast-2.9.0+:/opt/app/ncbi-blast-2.9.0+ -v $PWD/problem-1:/opt/app/problem-1 -v $PWD/problem-2:/opt/app/problem-2 deep-learning-site:latest
 ```
 (-v specifies the volume mounting to the folder in the project directory to be included in the container, which is too large if we actually include them. If you have more model files, you have to specify exactly like so)
 

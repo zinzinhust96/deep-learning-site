@@ -60,7 +60,6 @@ def result2():
 		global graph
 		with graph.as_default():
 			name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold, ensemble_model_2)
-			print(os.environ.get('SENDGRID_API_KEY'))
 			if email:
 				with app.app_context():
 					msg = Message(
