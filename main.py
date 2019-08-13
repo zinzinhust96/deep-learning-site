@@ -8,11 +8,21 @@ from process_result_problem_1 import process_result_problem_1
 from process_result_problem_2 import process_result_problem_2
 from ast import literal_eval
 from ensemble import load_trained_models_2, ensemble_folds
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from flask_mail import Mail, Message
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 app = Flask(__name__)
+
+mail_settings = {
+    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_PORT": 465,
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": os.environ['EMAIL_USER'],
+    "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
+}
+app.config.update(mail_settings)
+mail = Mail(app)
 
 # load in problem 2 models
 FEATURES_2_SHAPE = (21, 20, 1)
@@ -50,24 +60,26 @@ def result2():
 		global graph
 		with graph.as_default():
 			name, sequence, y_pred_prob, y_pred_label = process_result_problem_2(fasta_seq, threshold, ensemble_model_2)
+			print(os.environ.get('SENDGRID_API_KEY'))
 			if email:
-				message = Mail(
-					from_email='quangnguyenhong@admin.hust.edu.vn',
-					to_emails=email,
-					subject='Predicting Protein-DNA Binding Residues - Result',
-					html_content=render_template(
-						"result-2-mail.html",
-						name = name,
-						sequence = sequence,
-						sequence_dict = enumerate(list(sequence)),
-						sequence_length = len(sequence),
-						threshold = threshold,
-						y_pred_prob = y_pred_prob,
-						y_pred_label = y_pred_label
+				with app.app_context():
+					msg = Message(
+						subject='Predicting Protein-DNA Binding Residues - Result',
+						sender=app.config.get("MAIL_USERNAME"),
+						recipients=[email], # replace with your email for testing
+						html=render_template(
+							"result-2-mail.html",
+							name = name,
+							sequence = sequence,
+							sequence_dict = enumerate(list(sequence)),
+							sequence_length = len(sequence),
+							threshold = threshold,
+							y_pred_prob = y_pred_prob,
+							y_pred_label = y_pred_label
+						)
 					)
-				)
-				sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-				response = sg.send(message)
+					mail.send(msg)
+
 			return render_template(
 				"result-2.html",
 				name = name,
