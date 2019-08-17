@@ -13,6 +13,6 @@ COPY uwsgi.ini /etc/uwsgi/
 # Copy the code
 COPY . .
 
-CMD ["uwsgi", "--ini", "/etc/uwsgi/uwsgi.ini"]
+CMD ["python", "main.py"]
 
 EXPOSE 5000

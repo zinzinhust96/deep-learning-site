@@ -77,7 +77,7 @@ def ensemble(models, input_shape):
 
     return model
 
-def process_result_problem_2(fasta_seq, threshold):
+def process_result_problem_2(fasta_seq, threshold, ensemble_model):
     start_t = time.time()
     dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -90,13 +90,16 @@ def process_result_problem_2(fasta_seq, threshold):
     new_shape = list(features.shape)
     new_shape.append(1)
     features = np.reshape(features, new_shape)
+
+    print('FEATURE SHAPE: ', features.shape[1:])
     
-    trained_models = load_trained_models(input_shape = features.shape[1:], directory = dir_path + '/problem-2/seed_19')
-    ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])
+    # trained_models = load_trained_models(input_shape = features.shape[1:], directory = dir_path + '/problem-2/seed_19')
+    # ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])
     y_pred = ensemble_model.predict(features)
+
     y_pred_prob = calculate_probability(y_pred)
     y_pred_label = np.where(np.array(y_pred_prob) < threshold, 0, 1)
-    K.clear_session()
+    # K.clear_session()
     print('TIME ELAPSED: ', time.time() - start_t)
     return name, sequence, y_pred_prob, y_pred_label
 

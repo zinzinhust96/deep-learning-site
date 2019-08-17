@@ -85,6 +85,8 @@ def process_result_problem_1(fasta_seq, dataset):
         dataset_weight = dir_path + '/problem-1/H/seed_5'
     else:               # S. cerevisiae
         dataset_weight = dir_path + '/problem-1/S/seed_19'
+
+    print('FEATURE SHAPE: ', features.shape[1:])
     
     trained_models = load_trained_models(input_shape = features.shape[1:], directory = dataset_weight)
     ensemble_model = ensemble(trained_models, input_shape=features.shape[1:])
